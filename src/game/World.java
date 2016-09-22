@@ -18,6 +18,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     ArrayList<Entity> bulletList = new ArrayList<>();
     int time = 0;
     int asteroidTime = 0;
+    int asteroidDestroyed = 0;
 
     float x = 100.0f;
     float y = 150.0f;
@@ -37,13 +38,11 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         circle.setCenterY(y);
         spaceship.Update();
 
-
-        // TODO: refactor this
-//        asteroidList.forEach(Entity::Update);
-//        asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
-
         // TODO : Ugliest way to do it, but well is done
-        asteroidList.stream().filter(entity -> entity.HasCollision(bulletList)).forEach(Entity::MarkToDelete);
+        asteroidList.stream().filter(entity -> entity.HasCollision(bulletList)).forEach(entity -> {
+            entity.MarkToDelete();
+            asteroidDestroyed++;
+        });
 
         bulletList.forEach(Entity::Update);
         bulletList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
@@ -72,6 +71,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         graphics.drawString(Float.toString(x), 10, 120);
         graphics.drawString(Float.toString(y), 10, 140);
         graphics.drawString(Integer.toString(bulletList.size()), 10, 160);
+        graphics.drawString("Destroyed : " + Integer.toString(asteroidDestroyed), 10, 180);
         graphics.draw(circle);
         spaceship.Render(graphics);
 
