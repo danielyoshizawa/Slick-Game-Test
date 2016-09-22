@@ -20,7 +20,6 @@ public abstract class Entity {
         this.width = width;
     }
 
-    public abstract void Init();
     public abstract void Update();
     public abstract void Render(Graphics graphics);
 

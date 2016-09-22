@@ -9,11 +9,6 @@ public class Asteroid extends Entity {
     }
 
     @Override
-    public void Init() {
-
-    }
-
-    @Override
     public void Update() {
         setY(getY() + 1);
     }

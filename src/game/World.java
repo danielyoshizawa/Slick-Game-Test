@@ -75,15 +75,8 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         graphics.draw(circle);
         spaceship.Render(graphics);
 
-
-        // TODO: Refactor this
-        for(Entity entity : asteroidList) {
-            entity.Render(graphics);
-        }
-
-        for(Entity entity : bulletList) {
-            entity.Render(graphics);
-        }
+        asteroidList.forEach(entity -> entity.Render(graphics));
+        bulletList.forEach(entity -> entity.Render(graphics));
 
         cleanEntities();
     }
@@ -125,11 +118,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     }
 
     private void generateAsteroid() {
-
-        // TODO : Rethink
-        int posX = (int)(Math.random() * 500);
-
-        asteroidList.add(new Asteroid(posX,0));
+        asteroidList.add(new Asteroid((int)(Math.random() * 500),0));
     }
 
     // TODO : Refactor this

@@ -13,11 +13,6 @@ public class Spaceship extends Entity {
     }
 
     @Override
-    public void Init() {
-
-    }
-
-    @Override
     public void Update() {
 
     }
