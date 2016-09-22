@@ -15,7 +15,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     Circle circle;
     Spaceship spaceship;
     ArrayList<Entity> asteroidList = new ArrayList<>();
-    ArrayList<Bullet> bulletList = new ArrayList<>();
+    ArrayList<Entity> bulletList = new ArrayList<>();
     int time = 0;
 
     float x = 100.0f;
@@ -41,6 +41,9 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         asteroidList.forEach(Entity::Update);
         asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
 
+        // TODO : Ugliest way to do it, but well is done
+        asteroidList.stream().filter(entity -> entity.HasCollision(bulletList)).forEach(Entity::MarkToDelete);
+
         bulletList.forEach(Entity::Update);
         bulletList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
 
@@ -59,7 +62,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         graphics.drawString("Hello Jacqueline", 10, 100);
         graphics.drawString(Float.toString(x), 10, 120);
         graphics.drawString(Float.toString(y), 10, 140);
-        graphics.drawString(Integer.toString(asteroidList.size()), 10, 160);
+        graphics.drawString(Integer.toString(bulletList.size()), 10, 160);
         graphics.draw(circle);
         spaceship.Render(graphics);
 

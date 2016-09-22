@@ -2,6 +2,8 @@ package Entities;
 
 import org.newdawn.slick.Graphics;
 
+import java.util.ArrayList;
+
 public abstract class Entity {
 
     private float x = 0.0f;
@@ -29,6 +31,7 @@ public abstract class Entity {
         return getY() >= height || getY() < 0 || getX() >= width || getX() < 0;
     }
 
+    // TODO : Change to a Box or something like that
     public float getX() {
         return x;
     }
@@ -43,5 +46,16 @@ public abstract class Entity {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    // TODO : Improve this, also remember to collide Asteroids against Bullets
+    public boolean HasCollision(ArrayList<Entity> entityList) {
+        for(Entity entity : entityList) {
+            if (entity.getX() > x - 10 && entity.getX() < x + 20 && entity.getY() > y - 10 && entity.getY() < y + 20) {
+                entity.MarkToDelete();
+                return true;
+            }
+        }
+        return false;
     }
 }
