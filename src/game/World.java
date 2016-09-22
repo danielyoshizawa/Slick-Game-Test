@@ -24,7 +24,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
 
     public void init(GameContainer gameContainer) throws SlickException {
         circle = new Circle(100, 150, 50);
-        spaceship = new Spaceship();
+        spaceship = new Spaceship(250, 350);
     }
 
     public void update(GameContainer gameContainer, int i) throws SlickException {
@@ -33,7 +33,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         spaceship.Update();
 
         entityList.forEach(Entity::Update);
-        entityList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+        entityList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
@@ -54,15 +54,15 @@ public class World extends BasicGame implements KeyListener, MouseListener {
 
     // TODO : Replace with the arrows
     public void keyPressed(int key, char c) {
-        if (c == 'a')
+        if (key == Input.KEY_LEFT)
             spaceship.setX(spaceship.getX() - 10);
-        if (c == 'd')
+        if (key == Input.KEY_RIGHT)
             spaceship.setX(spaceship.getX() + 10);
-        if (c == 'w')
+        if (key == Input.KEY_UP)
             spaceship.setY(spaceship.getY() - 10);
-        if (c == 's')
+        if (key == Input.KEY_DOWN)
             spaceship.setY(spaceship.getY() + 10);
-        if (c == ' ')
+        if (key == Input.KEY_SPACE)
             shoot(spaceship.getCenterX(), spaceship.getY());
     }
 

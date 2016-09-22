@@ -20,7 +20,7 @@ public class Bullet implements Entity {
 
     @Override
     public void Update() {
-        setY(getY() + 1);
+        setY(getY() - 1);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class Bullet implements Entity {
         this.y = y;
     }
 
-    public boolean IsOutOfTheScreen(float height) {
-        return y >= height;
+    public boolean IsOutOfTheScreen(float width, float height) {
+        return y >= height || y < 0 || x >= width || x < 0;
     }
 
     @Override

@@ -9,8 +9,10 @@ public class Spaceship implements Entity{
     private float width = 0.0f;
     private boolean deleteInstance = false;
 
-    public Spaceship() {
-        width = 100.0f;
+    public Spaceship(float x, float y) {
+        width = 80.0f;
+        this.x = x;
+        this.y = y;
     }
 
     public void setX(float x) {
@@ -49,7 +51,7 @@ public class Spaceship implements Entity{
     }
 
     @Override
-    public boolean IsOutOfTheScreen(float height) {
+    public boolean IsOutOfTheScreen(float width, float height) {
         return true;
     }
 
