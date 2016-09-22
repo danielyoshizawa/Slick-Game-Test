@@ -9,11 +9,13 @@ import org.newdawn.slick.geom.Circle;
 
 import java.util.ArrayList;
 
+// TODO : Just DO IT, refactorings will be done later
 public class World extends BasicGame implements KeyListener, MouseListener {
 
     Circle circle;
     Spaceship spaceship;
-    ArrayList<Entity> entityList = new ArrayList<>();
+    ArrayList<Entity> asteroidList = new ArrayList<>();
+    ArrayList<Bullet> bulletList = new ArrayList<>();
     int time = 0;
 
     float x = 100.0f;
@@ -34,8 +36,14 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         circle.setCenterY(y);
         spaceship.Update();
 
-        entityList.forEach(Entity::Update);
-        entityList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+
+        // TODO: refactor this
+        asteroidList.forEach(Entity::Update);
+        asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+
+        bulletList.forEach(Entity::Update);
+        bulletList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+
 
 
         if (time >= 1000) {
@@ -51,11 +59,17 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         graphics.drawString("Hello Jacqueline", 10, 100);
         graphics.drawString(Float.toString(x), 10, 120);
         graphics.drawString(Float.toString(y), 10, 140);
-        graphics.drawString(Integer.toString(entityList.size()), 10, 160);
+        graphics.drawString(Integer.toString(asteroidList.size()), 10, 160);
         graphics.draw(circle);
         spaceship.Render(graphics);
 
-        for(Entity entity : entityList) {
+
+        // TODO: Refactor this
+        for(Entity entity : asteroidList) {
+            entity.Render(graphics);
+        }
+
+        for(Entity entity : bulletList) {
             entity.Render(graphics);
         }
 
@@ -95,14 +109,16 @@ public class World extends BasicGame implements KeyListener, MouseListener {
 
     // TODO : Rethink this
     private void shoot(float x, float y) {
-        entityList.add(new Bullet(x, y));
+        bulletList.add(new Bullet(x, y));
     }
 
     private void generateAsteroid() {
-        entityList.add(new Asteroid(200,0));
+        asteroidList.add(new Asteroid(200,0));
     }
 
+    // TODO : Refactor this
     private void cleanEntities() {
-        entityList.removeIf(entity -> entity.IsMarkedToDelete());
+        asteroidList.removeIf(entity -> entity.IsMarkedToDelete());
+        bulletList.removeIf(entity -> entity.IsMarkedToDelete());
     }
 }
