@@ -2,7 +2,6 @@ package Entities;
 
 import org.newdawn.slick.Graphics;
 
-// TODO : Rethink the name, and the need of the Entity interface
 public abstract class Entity {
 
     private float x = 0.0f;

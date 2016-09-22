@@ -15,11 +15,11 @@ public class Asteroid extends Entity {
 
     @Override
     public void Update() {
-
+        setY(getY() + 1);
     }
 
     @Override
     public void Render(Graphics graphics) {
-
+        graphics.drawRect(getX(), getY(), 10, 10);
     }
 }

@@ -1,5 +1,6 @@
 package game;
 
+import Entities.Asteroid;
 import Entities.Bullet;
 import Entities.Entity;
 import Entities.Spaceship;
@@ -13,6 +14,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     Circle circle;
     Spaceship spaceship;
     ArrayList<Entity> entityList = new ArrayList<>();
+    int time = 0;
 
     float x = 100.0f;
     float y = 150.0f;
@@ -34,6 +36,14 @@ public class World extends BasicGame implements KeyListener, MouseListener {
 
         entityList.forEach(Entity::Update);
         entityList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+
+
+        if (time >= 1000) {
+            generateAsteroid();
+            time = 0;
+        } else {
+            time += i;
+        }
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
@@ -86,6 +96,10 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     // TODO : Rethink this
     private void shoot(float x, float y) {
         entityList.add(new Bullet(x, y));
+    }
+
+    private void generateAsteroid() {
+        entityList.add(new Asteroid(200,0));
     }
 
     private void cleanEntities() {
