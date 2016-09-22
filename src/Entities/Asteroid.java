@@ -2,9 +2,9 @@ package Entities;
 
 import org.newdawn.slick.Graphics;
 
-public class Bullet extends Entity {
+public class Asteroid extends Entity {
 
-    public Bullet(float x, float y) {
+    public Asteroid (float x, float y) {
         super(x,y);
     }
 
@@ -15,11 +15,11 @@ public class Bullet extends Entity {
 
     @Override
     public void Update() {
-        setY(getY() - 1);
+
     }
 
     @Override
     public void Render(Graphics graphics) {
-        graphics.drawString("I", getX(), getY());
+
     }
 }
