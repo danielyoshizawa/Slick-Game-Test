@@ -1,13 +1,19 @@
 package game;
 
+import Entities.Bullet;
+import Entities.Entity;
 import Entities.Spaceship;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Circle;
+
+import java.util.ArrayList;
 
 public class World extends BasicGame implements KeyListener, MouseListener {
 
     Circle circle;
     Spaceship spaceship;
+    ArrayList<Entity> entityList = new ArrayList<>();
+
     float x = 100.0f;
     float y = 150.0f;
     boolean mousePressed = false;
@@ -25,6 +31,9 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         circle.setCenterX(x);
         circle.setCenterY(y);
         spaceship.Update();
+
+        entityList.forEach(Entity::Update);
+        entityList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getHeight())).forEach(Entity::MarkToDelete);
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
@@ -32,19 +41,29 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         graphics.drawString("Hello Jacqueline", 10, 100);
         graphics.drawString(Float.toString(x), 10, 120);
         graphics.drawString(Float.toString(y), 10, 140);
+        graphics.drawString(Integer.toString(entityList.size()), 10, 160);
         graphics.draw(circle);
         spaceship.Render(graphics);
+
+        for(Entity entity : entityList) {
+            entity.Render(graphics);
+        }
+
+        cleanEntities();
     }
 
+    // TODO : Replace with the arrows
     public void keyPressed(int key, char c) {
         if (c == 'a')
-            spaceship.SetX(spaceship.GetX() - 10);
+            spaceship.setX(spaceship.getX() - 10);
         if (c == 'd')
-            spaceship.SetX(spaceship.GetX() + 10);
+            spaceship.setX(spaceship.getX() + 10);
         if (c == 'w')
-            spaceship.SetY(spaceship.GetY() - 10);
+            spaceship.setY(spaceship.getY() - 10);
         if (c == 's')
-            spaceship.SetY(spaceship.GetY() + 10);
+            spaceship.setY(spaceship.getY() + 10);
+        if (c == ' ')
+            shoot(spaceship.getCenterX(), spaceship.getY());
     }
 
     public void mousePressed(int button, int x, int y) {
@@ -62,5 +81,14 @@ public class World extends BasicGame implements KeyListener, MouseListener {
             x = newx;
             y = newy;
         }
+    }
+
+    // TODO : Rethink this
+    private void shoot(float x, float y) {
+        entityList.add(new Bullet(x, y));
+    }
+
+    private void cleanEntities() {
+        entityList.removeIf(entity -> entity.IsMarkedToDelete());
     }
 }

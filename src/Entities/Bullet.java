@@ -2,35 +2,15 @@ package Entities;
 
 import org.newdawn.slick.Graphics;
 
-public class Spaceship implements Entity{
+public class Bullet implements Entity {
 
     private float x = 0.0f;
     private float y = 0.0f;
-    private float width = 0.0f;
     private boolean deleteInstance = false;
 
-    public Spaceship() {
-        width = 100.0f;
-    }
-
-    public void setX(float x) {
+    public Bullet(float x, float y) {
         this.x = x;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setY(float y) {
         this.y = y;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public float getCenterX() {
-        return x + (width / 2);
     }
 
     @Override
@@ -40,17 +20,32 @@ public class Spaceship implements Entity{
 
     @Override
     public void Update() {
-
+        setY(getY() + 1);
     }
 
     @Override
     public void Render(Graphics graphics) {
-        graphics.drawString("SpaceShip", x, y);
+        graphics.drawString("I", x, y);
     }
 
-    @Override
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     public boolean IsOutOfTheScreen(float height) {
-        return true;
+        return y >= height;
     }
 
     @Override
@@ -62,5 +57,4 @@ public class Spaceship implements Entity{
     public boolean IsMarkedToDelete() {
         return deleteInstance;
     }
-
 }
