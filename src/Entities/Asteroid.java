@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 public class Asteroid extends Entity {
 
     public Asteroid (float x, float y) {
-        super(x,y);
+        super(x,y, 10, 10);
     }
 
     @Override
@@ -20,6 +20,6 @@ public class Asteroid extends Entity {
 
     @Override
     public void Render(Graphics graphics) {
-        graphics.drawRect(getX(), getY(), 10, 10);
+        graphics.drawRect(getX(), getY(), getWidth(), getWidth());
     }
 }

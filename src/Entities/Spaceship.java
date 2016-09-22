@@ -4,16 +4,12 @@ import org.newdawn.slick.Graphics;
 
 public class Spaceship extends Entity {
 
-    private float width = 0.0f;
-
     public Spaceship(float x, float y) {
-        super(x,y);
-        width = 80.0f;
-
+        super(x,y, 20, 80);
     }
 
     public float getCenterX() {
-        return getX() + (width / 2);
+        return getX() + (getWidth() / 2);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     ArrayList<Entity> asteroidList = new ArrayList<>();
     ArrayList<Entity> bulletList = new ArrayList<>();
     int time = 0;
+    int asteroidTime = 0;
 
     float x = 100.0f;
     float y = 150.0f;
@@ -38,8 +39,8 @@ public class World extends BasicGame implements KeyListener, MouseListener {
 
 
         // TODO: refactor this
-        asteroidList.forEach(Entity::Update);
-        asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+//        asteroidList.forEach(Entity::Update);
+//        asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
 
         // TODO : Ugliest way to do it, but well is done
         asteroidList.stream().filter(entity -> entity.HasCollision(bulletList)).forEach(Entity::MarkToDelete);
@@ -48,6 +49,14 @@ public class World extends BasicGame implements KeyListener, MouseListener {
         bulletList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
 
 
+        // TODO : Create some timer mechanism
+        if (asteroidTime >= 300) {
+            asteroidList.forEach(Entity::Update);
+            asteroidList.stream().filter(entity -> entity.IsOutOfTheScreen(gameContainer.getWidth(), gameContainer.getHeight())).forEach(Entity::MarkToDelete);
+            asteroidTime = 0;
+        } else {
+            asteroidTime += i;
+        }
 
         if (time >= 1000) {
             generateAsteroid();
@@ -116,7 +125,11 @@ public class World extends BasicGame implements KeyListener, MouseListener {
     }
 
     private void generateAsteroid() {
-        asteroidList.add(new Asteroid(200,0));
+
+        // TODO : Rethink
+        int posX = (int)(Math.random() * 500);
+
+        asteroidList.add(new Asteroid(posX,0));
     }
 
     // TODO : Refactor this

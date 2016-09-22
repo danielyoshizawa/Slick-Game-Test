@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 public class Bullet extends Entity {
 
     public Bullet(float x, float y) {
-        super(x,y);
+        super(x,y, 5, 10);
     }
 
     @Override
